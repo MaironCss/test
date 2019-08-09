@@ -7,7 +7,9 @@ var autoprefixer = require('gulp-autoprefixer');
 var imagemin = require('gulp-imagemin');
 var postcss = require('gulp-postcss');
 var pngquant = require('imagemin-pngquant');
+var webp = require('gulp-webp');
 var browserSync = require('browser-sync').create();
+
 
 function sync(cb) {
     browserSync.init({
@@ -75,8 +77,12 @@ function imageBuild(cb) {
             use: [pngquant()],
             interlaced: true
         }))
+        .pipe(gulp.dest('build/images'));
+        gulp.src('app/images/**.*')
+        .pipe(webp())
         .pipe(gulp.dest('build/images'))
         .pipe(browserSync.reload({ stream: true }));
+       
 
     cb();
 }

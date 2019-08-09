@@ -1,18 +1,306 @@
-$mainColor : #5565ff;
-body{
-    background-color: $mainColor;
-    justify-content: space-between;
+// variables
+$mainColor: #444;
+$mainBackground: #fff;
 
-    a{
-        transform: scale(1.5);
-        border: #5565ff;
-        font-size: 3em; 
-        color: red;
+$container: 936px;
+$colGups: 15px;
+
+
+$textFont-size: 1rem;  // 16px
+$linkColor: blue;
+
+$breakpoints: (
+        xs: 0,
+        sm: 575px,
+        md: 768px,
+        lg: 1025px,
+        xl: 1200px,
+        xxl: 1440px
+);
+
+
+
+  //===========  mixins start ===========//
+
+// columns
+$columns: 12;
+
+
+@each $breakpoint in $breakpoints {
+  $name: nth($breakpoint, 1);
+  $size: nth($breakpoint, 2);
+  @media only screen and (min-width: $size) {
+    [class*="col-#{$name}"] {
+      box-sizing: border-box;
+      flex: 0 0 auto;
+      padding-right: $colGups;
+      padding-left: $colGups;
+    }
+    @for $i from 1 through $columns {
+      .col-#{$name}-#{$i} {
+        flex-basis: 100% / $columns * $i;
+        max-width: 100% / $columns * $i;
+      }
+    }
+    @for $i from 1 through $columns {
+      .col-#{$name}-offset-#{$i} {
+        margin-left: 100% / $columns * $i
+      }
+    }
+  }
+}
+
+
+.container{
+  max-width: $container;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+// layout
+
+.row{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -$colGups;
+  margin-left: -$colGups;
+}
+
+[class^='col']{
+  padding-left:$colGups;
+  padding-right:$colGups;
+  width: 100%;
+  min-height: 1px;
+}
+
+
+
+// main styles
+*{
+  -webkit-transition: .5s;
+     -moz-transition: .5s;
+      -ms-transition: .5s;
+       -o-transition: .5s;
+          transition: .5s;
+}
+body{
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+//buttons
+a, button{
+  transition: .3s ease-in;
+  transition-property: color, background-color, opacity;
+  font-family: 'GothamBook';
+  cursor: pointer;
+  svg{
+    fill:currentColor;
+  }
+}
+@font-face {
+  font-family: 'proximanova';
+  src: url('../fonts/mark_simonson_-_proxima_nova_condensed_regular-webfont.woff');
+  src: local('gothambold1'), url('../fonts/mark_simonson_-_proxima_nova_condensed_regular-webfont.woff') format('woff'), url('./gothambold1.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'proximanovasemibold';
+  src: url('../fonts/mark_simonson_-_proxima_nova_condensed_semibold-webfont.woff');
+  src: local('GothamBook'), url('../fonts/mark_simonson_-_proxima_nova_condensed_semibold-webfont.woff') format('woff'), url('./GothamBook.ttf') format('truetype');
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:  sans-serif;
+}
+p{
+  font-family: 'proximanova';
+}
+.visually-hidden{
+  height: 0;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: -99999999999999999999px;
+}
+// header styles
+.flex-container{
+  display: flex;
+  
+}
+.header-name{
+  padding-top: 15px;
+  &__tagline{
+  font-size: 1rem;
+  margin-bottom: 8px;
+  }
+  & a{
+    font-size: 0.938rem;
+        width: 149px;
+        height: 31px;
+        color: #4090DB;
+        border: 1px solid #4090db;
+        -webkit-border-radius: 3px;
+                border-radius: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 8px;
+  }
+}
+.logo-img{
+  max-height: 161px;
+  max-width: 161px;
+}
+.header-info{
+  max-width: 60%;
+  margin-left: 5%;
+}
+.header-description__text{
+  font-size: 0.938rem;
+  color: #3D4044;
+  & span{
+     font-family: 'proximanovasemibold';
+     font-weight: 700;
+     margin-right: 5px;
+  }
+  
+}
+.picker {
+    padding-top: 10px;
+    display:grid;
+    
+    & input{
+      height: 30px;
+      width: 90%;
+      -webkit-border-radius: 7px;
+              border-radius: 7px;
+      margin-bottom: 5px;
+      outline: none;
+      background-color: none;
     }
 }
 
-h1{
-    color: #fff;
+//break point for desctop
+
+@media screen and (min-width: 1025px){
+.header{
+  padding: 4px 0 34px 0;
+}
+.flex-container{
+  display: flex;
+}
+.logo-img{
+  margin-left: 55px;
+}
+.header-info {
+    margin-left: 98px;
+}
+.header-name {
+    display: flex;
+    padding: 40px 0 17px 0;
+    &__tagline {
+    font-size: 1.813rem;
+    margin-right: 17px;
+}
+    
+      & a{
+        font-size: 0.938rem;
+        width: 149px;
+        height: 31px;
+        color: #4090DB;
+        border: 1px solid #4090db;
+        -webkit-border-radius: 3px;
+                border-radius: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+}
+.picker{
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  align-items: center;
+  & input{
+    width: 183px;
+    height: 31px;
+    padding-left: 10px;
+    margin-left: 25px;
+  }
+}
 }
 
-@import 'main.scss';
+
+// main styles
+.main{
+  background-color: #fafafa;
+  padding: 75px 0; 
+}
+.picture-content{
+  position: relative;
+  opacity: .8;
+  &:hover{
+    cursor: pointer;
+    opacity: 1;
+    
+  }
+}
+.main-img{
+  overflow: hidden;
+  margin-bottom: 30px;
+  & img{
+    width: 100%;
+  }
+  
+ 
+ 
+}
+.position{
+    position: absolute;
+    top: 50%;
+    width: 100%;    
+    padding: 20px;
+    
+}
+.img-description{
+  display: flex;
+  margin-bottom: 20px;
+  color: #FFF;
+   font-family: 'proximanovasemibold';
+   -webkit-justify-content: space-between;
+           justify-content: space-between;
+}
+.img-score{
+  display: flex;
+}
+.img-description__text{
+  font-size: 1.063em;
+  margin-left: 7px;
+  font-family: 'proximanovasemibold';
+}
+.img-score__middle{
+  margin-right: 30px;
+}
+.upload-info-tag{
+   font-size: 1.063em;
+   color: #FFF;
+   font-family: 'proximanovasemibold';
+   text-align: center;
+}
+.main-more{
+  width: 126px;
+  height: 31px;
+  margin: 0 auto;
+  & a{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000000;
+    -webkit-border-radius: 20px;
+            border-radius: 20px;
+    font-size: 0.750em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
